@@ -85,7 +85,7 @@ app.get("/api/protected", verifyToken, (req, res) => {
   res.json({ message: "This is protected content only for admin." });
 });
 
-mongoose.connect("mongodb://localhost:27017/painting")
+mongoose.connect(process.env.MONGODB_URL)
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
