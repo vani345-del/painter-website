@@ -36,8 +36,17 @@ router.put("/:id", async (req, res) => {
 
 // Delete image
 router.delete("/:id", async (req, res) => {
-  await GalleryImage.findByIdAndDelete(req.params.id);
-  res.json({ success: true });
+  try {
+    const deletedImage = await GalleryImage.findByIdAndDelete(req.params.id);
+    if (!deletedImage) {
+      return res.status(404).json({ message: "Gallery image not found" });
+    }
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting gallery image:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 });
+
 
 module.exports = router;
