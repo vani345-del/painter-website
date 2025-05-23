@@ -21,7 +21,7 @@ const ContactForm = () => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     try {
-      const response=await axios.post('http://localhost:5000/',formData);
+      const response=await axios.post('https://painter-website-1.onrender.com/',formData);
       alert(response.data);
     } catch (error) {
       console.error(error)

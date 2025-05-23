@@ -7,7 +7,7 @@ const GalleryPage = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/gallery", {
+        const res = await fetch("https://painter-website-1.onrender.com/api/gallery", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -34,10 +34,10 @@ const GalleryPage = () => {
               <div
                 key={img._id}
                 className="border rounded shadow p-2 cursor-pointer"
-                onClick={() => setSelectedImage(`http://localhost:5000${img.imageUrl}`)}
+                onClick={() => setSelectedImage(`https://painter-website-1.onrender.com${img.imageUrl}`)}
               >
                 <img
-                  src={`http://localhost:5000${img.imageUrl}`}
+                  src={`https://painter-website-1.onrender.com${img.imageUrl}`}
                   alt={img.name}
                   className="w-full h-48 object-cover rounded mb-2"
                 />

@@ -12,7 +12,7 @@ const GalleryDashboard = () => {
   }, []);
 
   const fetchImages = async () => {
-    const res = await axios.get("http://localhost:5000/api/gallery");
+    const res = await axios.get("https://painter-website-1.onrender.com/api/gallery");
     setImages(res.data);
   };
 
@@ -20,19 +20,19 @@ const GalleryDashboard = () => {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);
-    await axios.post("http://localhost:5000/api/gallery/upload", formData);
+    await axios.post("https://painter-website-1.onrender.com/api/gallery/upload", formData);
     fetchImages();
     setName("");
     setFile(null);
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/gallery/${id}`);
+    await axios.delete(`https://painter-website-1.onrender.com/api/gallery/${id}`);
     fetchImages();
   };
 
   const handleEdit = async (id, newName) => {
-    await axios.put(`http://localhost:5000/api/gallery/${id}`, { name: newName });
+    await axios.put(`https://painter-website-1.onrender.com/api/gallery/${id}`, { name: newName });
     fetchImages();
   };
 
@@ -55,7 +55,7 @@ const GalleryDashboard = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
         {images.map((img) => (
           <div key={img._id} className="border p-2 rounded">
-            <img src={`http://localhost:5000${img.imageUrl}`} alt={img.name} className="w-full h-32 object-cover mb-2" />
+            <img src={`https://painter-website-1.onrender.com${img.imageUrl}`} alt={img.name} className="w-full h-32 object-cover mb-2" />
             <input
               type="text"
               defaultValue={img.name}
