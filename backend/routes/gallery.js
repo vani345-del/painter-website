@@ -7,7 +7,7 @@ const GalleryImage = require("../models/GalleryImage");
 // Upload new image
 router.post("/upload", upload.single("image"), async (req, res) => {
   const { name } = req.body;
-  const imageUrl = `/uploads/${req.file.filename}`;
+  const imageUrl = `/upload/${req.file.filename}`;
   const newImage = new GalleryImage({ name, imageUrl });
   await newImage.save();
   res.json(newImage);

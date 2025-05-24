@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require('path');
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const nodemailer=require("nodemailer")
@@ -18,7 +19,7 @@ const verifyToken = require("./middleware/verifyToken");
 // Core Middlewares
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 // Routes
 app.use("/api/gallery", galleryRoutes);
