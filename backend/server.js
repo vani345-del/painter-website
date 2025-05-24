@@ -36,6 +36,13 @@ app.post("/api/login", (req, res) => {
   return res.status(401).json({ message: "Invalid password" });
 });
 
+//welcome page
+app.get('/',(req,res)=>{
+    res.send("Wlcome to the page");
+});
+
+
+
 //user mail nodemailer
 app.post('/',async(req,res)=>{
       
