@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Header from "../components/Common/Header";
 import Footer from "../components/Common/Footer";
 
+
 const DashboardPage = () => {
   const [images, setImages] = useState([]);
   const [name, setName] = useState("");
@@ -13,11 +14,12 @@ const DashboardPage = () => {
 
   const fetchImages = async () => {
     try {
-      const res = await fetch("https://painter-website-1.onrender.com/api/gallery", {
+      const res = await fetch("http://localhost:5000/api/gallery", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
       setImages(data);
+      console.log(data);
     } catch (error) {
       toast.error("Failed to fetch images.");
     }
@@ -39,7 +41,7 @@ const DashboardPage = () => {
     formData.append("name", name);
 
     try {
-      await fetch("https://painter-website-1.onrender.com/api/gallery/upload", {
+      await fetch("http://localhost:5000/api/gallery/upload", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -55,7 +57,7 @@ const DashboardPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`https://painter-website-1.onrender.com/api/gallery/${id}`, {
+      await fetch(`http://localhost:5000/api/gallery/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -68,7 +70,7 @@ const DashboardPage = () => {
 
   const handleEdit = async (id, newName) => {
     try {
-      await fetch(`https://painter-website-1.onrender.com/api/gallery/${id}`, {
+      await fetch(`http://localhost:5000/api/gallery/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +126,7 @@ const DashboardPage = () => {
           {images.map((img) => (
             <div key={img._id} className="border p-2 rounded shadow">
               <img
-                src={`https://painter-website-1.onrender.com${img.imageUrl}`}
+                src={`http://localhost:5000${img.imageUrl}`}
                 alt={img.name}
                 className="w-full h-40 object-cover mb-2"
               />

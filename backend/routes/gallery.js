@@ -1,7 +1,7 @@
 // routes/gallery.js
 const express = require("express");
 const router = express.Router();
-const upload = require("../middleware/upload");
+const { upload } = require("../middleware/multerConfig");
 const GalleryImage = require("../models/GalleryImage");
 
 // Upload new image
@@ -47,6 +47,5 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 module.exports = router;
