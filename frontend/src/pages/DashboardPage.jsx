@@ -45,7 +45,7 @@ const DashboardPage = () => {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`https://painter-website-1.onrender.com/gallery/${id}`, {
+    await fetch(`https://painter-website-1.onrender.com/api/gallery/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
