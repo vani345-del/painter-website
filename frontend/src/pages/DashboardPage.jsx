@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast"; // Toast import
+import { toast } from "react-toastify";
 import Header from "../components/Common/Header";
 import Footer from "../components/Common/Footer";
 
@@ -32,10 +32,7 @@ const DashboardPage = () => {
   }, []);
 
   const handleUpload = async () => {
-    if (!file || !name) {
-      toast.error("Please provide both image and name.");
-      return;
-    }
+    if (!file || !name) return toast.error("Please provide both image and name.");
 
     const formData = new FormData();
     formData.append("image", file);
@@ -47,7 +44,6 @@ const DashboardPage = () => {
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
-
       toast.success("Image uploaded successfully!");
       setFile(null);
       setName("");
@@ -63,7 +59,6 @@ const DashboardPage = () => {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
-
       toast.success("Image deleted successfully!");
       fetchImages();
     } catch (err) {
@@ -81,11 +76,10 @@ const DashboardPage = () => {
         },
         body: JSON.stringify({ name: newName }),
       });
-
       toast.success("Image name updated!");
       fetchImages();
     } catch (err) {
-      toast.error("Failed to update name.");
+      toast.error("Failed to update image name.");
     }
   };
 
@@ -97,7 +91,6 @@ const DashboardPage = () => {
 
   return (
     <>
-      <Toaster position="top-right" /> {/* Toast container */}
       <Header />
       <div className="max-w-4xl mx-auto mt-8 p-4">
         <div className="flex justify-between items-center mb-6">
@@ -126,7 +119,7 @@ const DashboardPage = () => {
           </button>
         </div>
 
-        {/* Gallery Display */}
+              {/* Gallery Display */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {images.map((img) => (
             <div key={img._id} className="border p-2 rounded shadow">
@@ -157,4 +150,3 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
-
