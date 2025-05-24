@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from '../components/Common/Header';
+import { Toaster, toast } from "react-hot-toast";
+
 import Footer from '../components/Common/Footer';
 
 
@@ -19,9 +20,11 @@ const LoginPage = () => {
     const data = await res.json();
     if (data.token) {
       localStorage.setItem("token", data.token);
+      toast.success("Login successful!");
       navigate("/dashboard");
     } else {
-      alert("Invalid password");
+      toast.error("Invalid password");
+      
     }
   };
 

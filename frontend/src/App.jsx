@@ -12,11 +12,13 @@ import LoginPage from './pages/LoginPage'
 import Keyboard from './components/Admin/Keyboard'
 import DashboardPage from './pages/DashboardPage'
 import GalleryPage from './pages/GalleryPage'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
   return (
     <BrowserRouter>
       <Keyboard />
+      <Toaster position="top-right"/>
       <Routes>
         {/* Public user routes with layout */}
         <Route path="/" element={<UserLayout />}>

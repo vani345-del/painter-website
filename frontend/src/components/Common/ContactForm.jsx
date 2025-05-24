@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Toaster, toast } from 'react-hot-toast'
 
 const ContactForm = () => {
 
@@ -19,11 +20,13 @@ const ContactForm = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    
     try {
       const response=await axios.post('https://painter-website-1.onrender.com/',formData);
-      alert(response.data);
+       toast.success('Details submitted successfully!');
+  
     } catch (error) {
+      toast.error('Something went wrong!');
       console.error(error)
       
     }
@@ -48,6 +51,7 @@ const ContactForm = () => {
 
   return (
     <div>
+      <Toaster position="top-right" /> 
           <section className="py-10 bg-gray-50 text-center px-4">
           <p className="text-base sm:text-xl text-gray-600 mb-12 max-w-xl mx-auto">
                Fill the below form, our team will contact you!

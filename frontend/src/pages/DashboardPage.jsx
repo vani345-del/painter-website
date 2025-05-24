@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "react-hot-toast"; // Toast import
 import Header from "../components/Common/Header";
 import Footer from "../components/Common/Footer";
 
@@ -11,11 +12,15 @@ const DashboardPage = () => {
   const token = localStorage.getItem("token");
 
   const fetchImages = async () => {
-    const res = await fetch("https://painter-website-1.onrender.com/api/gallery", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-    setImages(data);
+    try {
+      const res = await fetch("https://painter-website-1.onrender.com/api/gallery", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setImages(data);
+    } catch (error) {
+      toast.error("Failed to fetch images.");
+    }
   };
 
   useEffect(() => {
@@ -27,50 +32,72 @@ const DashboardPage = () => {
   }, []);
 
   const handleUpload = async () => {
-    if (!file || !name) return alert("Please provide both image and name.");
+    if (!file || !name) {
+      toast.error("Please provide both image and name.");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);
 
-    await fetch("https://painter-website-1.onrender.com/api/gallery/upload", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
+    try {
+      await fetch("https://painter-website-1.onrender.com/api/gallery/upload", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
 
-    setFile(null);
-    setName("");
-    fetchImages();
+      toast.success("Image uploaded successfully!");
+      setFile(null);
+      setName("");
+      fetchImages();
+    } catch (err) {
+      toast.error("Failed to upload image.");
+    }
   };
 
   const handleDelete = async (id) => {
-    await fetch(`https://painter-website-1.onrender.com/api/gallery/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    fetchImages();
+    try {
+      await fetch(`https://painter-website-1.onrender.com/api/gallery/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      toast.success("Image deleted successfully!");
+      fetchImages();
+    } catch (err) {
+      toast.error("Failed to delete image.");
+    }
   };
 
   const handleEdit = async (id, newName) => {
-    await fetch(`https://painter-website-1.onrender.com/api/gallery/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ name: newName }),
-    });
-    fetchImages();
+    try {
+      await fetch(`https://painter-website-1.onrender.com/api/gallery/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name: newName }),
+      });
+
+      toast.success("Image name updated!");
+      fetchImages();
+    } catch (err) {
+      toast.error("Failed to update name.");
+    }
   };
 
   const logout = () => {
     localStorage.removeItem("token");
+    toast.success("Logged out successfully!");
     navigate("/admin");
   };
 
   return (
     <>
+      <Toaster position="top-right" /> {/* Toast container */}
       <Header />
       <div className="max-w-4xl mx-auto mt-8 p-4">
         <div className="flex justify-between items-center mb-6">
@@ -130,3 +157,4 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
+
